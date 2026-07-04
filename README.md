@@ -40,3 +40,21 @@ All expenses are stored in a list during program execution.
 ## Author
 
 Charutha Rajeevan
+# Expense Tracker (Python)
+
+A simple Python console-based Expense Tracker built as part of my 90-day coding challenge.
+
+## Features
+
+* Add expenses
+* View expenses
+* Show category-wise total spending
+
+## Tech Used
+
+* Python
+
+## Progress
+
+* Day 1: Built the basic expense tracker
+* Day 2: Added category-wise total spending
