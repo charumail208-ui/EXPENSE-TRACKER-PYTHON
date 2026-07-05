@@ -2,15 +2,16 @@ import csv
 def save_expenses_to_csv(expenses, filename):
     with open("expenses.csv", mode='w', newline='') as file:
         writer=csv.writer(file)
-        writer.writerow(["Name", "Amount", "Category"])
+        writer.writerow(["Name", "Amount", "Category", "Date"])
         for expense in expenses:
-            writer.writerow([expense["name"], expense["amount"], expense["category"]])
+            writer.writerow([expense["name"], expense["amount"], expense["category"], expense["date"]])
 expenses=[]
 def add_expense():
     name=input("enter the name:")
     amount=int(input("enter the amount:"))
     category=input("enter the category:")
-    expense={"name":name,"amount":amount,"category":category}
+    date=input("enter the date:")
+    expense={"name":name,"amount":amount,"category":category,"date":date}
     expenses.append(expense)
     save_expenses_to_csv(expenses, "expenses.csv")
     print("expense added successfully!! \n")
@@ -20,7 +21,7 @@ def view_expenses():
         return
     print("YOUR EXPENSES:")
     for expense in expenses:
-        print(f"- {expense['name'] }- ${expense['amount']} - ({expense['category']})")
+        print(f"- {expense['name'] }- ${expense['amount']} - ({expense['category']}) - Date: {expense['date']}")
     print()
 def delete_expense():
     name = input("Enter the name of the expense to delete: ")
@@ -29,9 +30,9 @@ def delete_expense():
             expenses.remove(expense)
             with open("expenses.csv", mode='w', newline='') as file:
                 writer=csv.writer(file)
-                writer.writerow(["Name", "Amount", "Category"])
+                writer.writerow(["Name", "Amount", "Category","Date"])
                 for expense in expenses:
-                    writer.writerow([expense["name"], expense["amount"], expense["category"]])
+                    writer.writerow([expense["name"], expense["amount"], expense["category"], expense["date"]])
             print(f"Expense '{name}' deleted successfully!\n")
             return
     print(f"No expense found with the name '{name}'.\n")
@@ -57,10 +58,28 @@ def load_expenses_from_csv():
         with open("expenses.csv", mode='r') as file:
             reader=csv.DictReader(file)
             for row in reader:
-                expense={"name":row["Name"],"amount":int(row["Amount"]),"category":row["Category"]}
+                expense={"name":row["Name"],"amount":int(row["Amount"]),"category":row["Category"],"date":row["Date"]}
                 expenses.append(expense)
     except FileNotFoundError:
         pass
+def search_by_category():
+    found=False
+    category=input("Enter the category to search for: ")
+    for expense in expenses:
+        if expense["category"] == category:
+            print(f"- {expense['name'] }- ${expense['amount']} - ({expense['category']}) - Date: {expense['date']}")
+            found=True
+    if not found:
+        print(f"No expenses found in the category '{category}'.")
+def search_by_date():
+    found=False
+    date=input("Enter the date to search for (DD-MM-YYYY): ")
+    for expense in expenses:
+        if expense["date"] == date:
+            print(f"- {expense['name'] }- ${expense['amount']} - ({expense['category']}) - Date: {expense['date']}")
+            found=True
+    if not found:
+        print(f"No expenses found on the date '{date}'.")
 def main():
     while True:
         print("1. Add Expense")
@@ -68,8 +87,10 @@ def main():
         print("3. Delete Expenses")
         print("4. Show category total")
         print("5. Show overall total spending")
-        print("6. Exit")
-        choice = input("Enter your choice (1-6): ")
+        print("6. Search by category")
+        print("7. Search by date")
+        print("8. Exit")
+        choice = input("Enter your choice (1-8): ")
         if choice == "1":
             add_expense()
         elif choice == "2":
@@ -81,6 +102,10 @@ def main():
         elif choice == "5":
             show_overall_total(expenses)
         elif choice == "6":
+            search_by_category()
+        elif choice == "7":
+            search_by_date()
+        elif choice == "8":
             print("Exiting expense tracker. Goodbye!")
             break
         else:
