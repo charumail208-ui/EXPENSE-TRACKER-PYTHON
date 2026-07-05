@@ -1,60 +1,121 @@
-# Expense Tracker Python
+# Expense Tracker (Python)
 
-A simple Python-based expense tracker built as part of my learning journey in AI and Data Science.
+A simple **Python console-based Expense Tracker** built as part of my **90 Days of Coding** challenge and learning journey in **AI and Data Science**.
+
+This project helps users record, manage, and analyze their expenses using a menu-driven interface. It also stores expense data in a **CSV file**, so the data remains saved even after closing the program.
+
+---
 
 ## Features
 
-* Add an expense with name, amount, and category
+* Add a new expense with **name, amount, and category**
 * View all recorded expenses
-* Calculate total spending
-* Menu-driven console interface
+* Delete an expense
+* Show **category-wise total spending**
+* Show **overall total spending**
+* Save expenses permanently in a **CSV file**
+* Load saved expenses automatically when the program starts
+* CSV file includes **headings** for better organization
+
+---
 
 ## Technologies Used
 
-* Python
+* **Python**
+* Built-in **CSV module**
+
+---
 
 ## How It Works
 
-The program allows the user to:
+The program provides a menu-driven console interface with the following options:
 
-1. Add an expense
-2. View all expenses
-3. Show total spending
-4. Exit the program
+1. **Add Expense**
+   Add a new expense by entering the expense name, amount, and category.
 
-Each expense is stored as a dictionary with:
+2. **View Expenses**
+   Display all saved expenses.
 
-* Expense name
-* Amount
-* Category
+3. **Delete Expense**
+   Remove an expense and update the CSV file.
 
-All expenses are stored in a list during program execution.
+4. **Show Category Total**
+   Display the total spending for each category.
 
-## Future Improvements
+5. **Show Overall Total**
+   Display the total of all expenses.
 
-* Save expenses to a file
-* Add monthly expense summary
-* Show category-wise spending
-* Build a GUI or web version
+6. **Exit**
+   Close the program safely.
 
-## Author
+---
 
-Charutha Rajeevan
-# Expense Tracker (Python)
+## Data Storage
 
-A simple Python console-based Expense Tracker built as part of my 90-day coding challenge.
+Each expense is stored with:
 
-## Features
+* **Name**
+* **Amount**
+* **Category**
 
-* Add expenses
-* View expenses
-* Show category-wise total spending
+Expenses are stored in a CSV file named **`expenses.csv`**.
 
-## Tech Used
+### Example CSV format:
 
-* Python
+```csv
+Name,Amount,Category
+Lunch,120,Food
+Bus,30,Travel
+Book,250,Study
+```
+
+---
 
 ## Progress
 
-* Day 1: Built the basic expense tracker
-* Day 2: Added category-wise total spending
+### Day 1
+
+* Built the basic expense tracker
+* Added the ability to store expenses in a list
+
+### Day 2
+
+* Added **category-wise total spending**
+
+### Day 3
+
+* Added **CSV file storage**
+* Added **loading expenses from CSV**
+* Added **delete expense with CSV update**
+* Added **overall total spending**
+* Added **CSV headings**
+
+---
+
+## Learning Outcomes
+
+Through this project, I practiced:
+
+* Python functions
+* Lists and dictionaries
+* File handling
+* CSV reading and writing
+* Menu-driven program design
+* Updating file data after deletion
+
+---
+
+## Future Improvements
+
+* Add **date** for each expense
+* Search expenses by category
+* Monthly expense summary
+* Budget limit warning
+* Graphs or charts for expense analysis
+* GUI or web-based version of the project
+
+---
+
+## Author
+
+**Charutha Rajeevan**
