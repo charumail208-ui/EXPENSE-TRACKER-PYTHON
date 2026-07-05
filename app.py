@@ -1,10 +1,18 @@
+import csv
+def save_expenses_to_csv(expenses, filename):
+    with open("expenses.csv", mode='w', newline='') as file:
+        writer=csv.writer(file)
+        writer.writerow(["Name", "Amount", "Category"])
+        for expense in expenses:
+            writer.writerow([expense["name"], expense["amount"], expense["category"]])
 expenses=[]
 def add_expense():
-    name=input("enter your name:")
-    amount=int(input("enter your amount:"))
-    category=input("enter your category:")
+    name=input("enter the name:")
+    amount=int(input("enter the amount:"))
+    category=input("enter the category:")
     expense={"name":name,"amount":amount,"category":category}
     expenses.append(expense)
+    save_expenses_to_csv(expenses, "expenses.csv")
     print("expense added successfully!! \n")
 def view_expenses():
     if not expenses:
@@ -19,6 +27,11 @@ def delete_expense():
     for expense in expenses:
         if expense["name"] == name:
             expenses.remove(expense)
+            with open("expenses.csv", mode='w', newline='') as file:
+                writer=csv.writer(file)
+                writer.writerow(["Name", "Amount", "Category"])
+                for expense in expenses:
+                    writer.writerow([expense["name"], expense["amount"], expense["category"]])
             print(f"Expense '{name}' deleted successfully!\n")
             return
     print(f"No expense found with the name '{name}'.\n")
@@ -34,14 +47,29 @@ def show_category_total(expenses):
     print("category wise total spending:")
     for category,total in category_total.items():
         print(f"{category}: ${total}")
+def show_overall_total(expenses):
+    total=0
+    for expense in expenses:
+        total+=expense["amount"]
+    print(f"Overall total spending: ${total}")
+def load_expenses_from_csv():
+    try:
+        with open("expenses.csv", mode='r') as file:
+            reader=csv.DictReader(file)
+            for row in reader:
+                expense={"name":row["Name"],"amount":int(row["Amount"]),"category":row["Category"]}
+                expenses.append(expense)
+    except FileNotFoundError:
+        pass
 def main():
     while True:
         print("1. Add Expense")
         print("2. View Expenses")
         print("3. Delete Expenses")
         print("4. Show category total")
-        print("5. Exit")
-        choice = input("Enter your choice (1-5): ")
+        print("5. Show overall total spending")
+        print("6. Exit")
+        choice = input("Enter your choice (1-6): ")
         if choice == "1":
             add_expense()
         elif choice == "2":
@@ -51,8 +79,11 @@ def main():
         elif choice == "4":
             show_category_total(expenses)
         elif choice == "5":
+            show_overall_total(expenses)
+        elif choice == "6":
             print("Exiting expense tracker. Goodbye!")
             break
         else:
             print("Invalid choice. Please try again.\n")
+load_expenses_from_csv()
 main()
