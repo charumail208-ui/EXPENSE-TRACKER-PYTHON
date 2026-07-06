@@ -80,6 +80,41 @@ def search_by_date():
             found=True
     if not found:
         print(f"No expenses found on the date '{date}'.")
+def monthly_summary(expenses):
+    month = input("Enter month (MM): ")
+    year = input("Enter year (YYYY): ")
+
+    total = 0
+    category_totals = {}
+
+    for expense in expenses:
+        date = expense["date"]
+
+        parts = date.split("-")
+        if len(parts) != 3:
+            continue   # skip invalid date format
+
+        day, exp_month, exp_year = parts
+
+        if exp_month == month and exp_year == year:
+            amount = expense["amount"]
+            total += amount
+
+            category = expense["category"]
+            if category in category_totals:
+                category_totals[category] += amount
+            else:
+                category_totals[category] = amount
+
+    print(f"\nExpense Summary for {month}-{year}")
+    print(f"Total Spent: ₹{total}")
+
+    if total == 0:
+        print("No expenses found for this month.")
+    else:
+        print("Category-wise spending:")
+        for category, amount in category_totals.items():
+            print(f"{category}: ₹{amount}")
 def main():
     while True:
         print("1. Add Expense")
@@ -89,8 +124,9 @@ def main():
         print("5. Show overall total spending")
         print("6. Search by category")
         print("7. Search by date")
-        print("8. Exit")
-        choice = input("Enter your choice (1-8): ")
+        print("8. Monthly Summary")
+        print("9. Exit")
+        choice = input("Enter your choice (1-9): ")
         if choice == "1":
             add_expense()
         elif choice == "2":
@@ -106,6 +142,8 @@ def main():
         elif choice == "7":
             search_by_date()
         elif choice == "8":
+            monthly_summary(expenses)
+        elif choice == "9":
             print("Exiting expense tracker. Goodbye!")
             break
         else:
