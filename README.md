@@ -15,6 +15,7 @@ This project helps users record, manage, and analyze expenses using a menu-drive
 * Show **overall total spending**
 * Search expenses by **category**
 * Search expenses by **date**
+* Show **monthly expense summary**
 * Save expenses permanently in a **CSV file**
 * Load saved expenses automatically when the program starts
 * CSV file includes headings for better organization
@@ -53,7 +54,10 @@ The program provides a menu-driven console interface with the following options:
 7. **Search by Date**
    Show expenses recorded on a specific date.
 
-8. **Exit**
+8. **Monthly Summary**
+   Display the total spending for a selected month and year, along with category-wise totals for that month.
+
+9. **Exit**
    Close the program safely.
 
 ---
@@ -71,11 +75,11 @@ Expenses are stored in a CSV file named **`expenses.csv`**.
 
 ### Example CSV format:
 
-```csv id="ayzru9"
+```csv
 Name,Amount,Category,Date
-Lunch,120,Food,2026-07-05
-Bus,30,Travel,2026-07-06
-Book,250,Study,2026-07-06
+Lunch,120,Food,05-07-2026
+Bus,30,Travel,06-07-2026
+Book,250,Study,06-07-2026
 ```
 
 ---
@@ -105,6 +109,13 @@ Book,250,Study,2026-07-06
 * Added **search by category**
 * Added **search by date**
 
+### Day 5
+
+* Added **monthly expense summary**
+* Displays **total spending for a selected month**
+* Displays **category-wise monthly spending**
+* Improved understanding of **function creation and data filtering**
+
 ---
 
 ## Learning Outcomes
@@ -118,14 +129,15 @@ Through this project, I practiced:
 * Menu-driven program design
 * Searching and filtering data
 * Updating file data after deletion
+* Summarizing data month-wise
 
 ---
 
 ## Future Improvements
 
-* Add **monthly summary**
 * Show **highest spending category**
 * Add **budget warning**
+* Add **edit expense**
 * Create graphs/charts for expense analysis
 * Build a **Flask website version**
 * Upgrade storage from CSV to a database like **SQLite**
