@@ -115,6 +115,27 @@ def monthly_summary(expenses):
         print("Category-wise spending:")
         for category, amount in category_totals.items():
             print(f"{category}: ₹{amount}")
+def show_highest_category():
+    if not expenses:
+        print("No expenses found.\n")
+        return
+
+    category_total = {}
+
+    for expense in expenses:
+        category = expense["category"]
+        amount = expense["amount"]
+
+        if category in category_total:
+            category_total[category] += amount
+        else:
+            category_total[category] = amount
+
+    highest_category = max(category_total, key=category_total.get)
+
+    print("\nCategory with Highest Spending:")
+    print(f"Category: {highest_category}")
+    print(f"Total Spent: ₹{category_total[highest_category]}\n")
 def main():
     while True:
         print("1. Add Expense")
@@ -125,8 +146,9 @@ def main():
         print("6. Search by category")
         print("7. Search by date")
         print("8. Monthly Summary")
-        print("9. Exit")
-        choice = input("Enter your choice (1-9): ")
+        print("9.Show highest category")
+        print("10. Exit")
+        choice = input("Enter your choice (1-10): ")
         if choice == "1":
             add_expense()
         elif choice == "2":
@@ -144,6 +166,8 @@ def main():
         elif choice == "8":
             monthly_summary(expenses)
         elif choice == "9":
+            show_highest_category()
+        elif choice == "10":
             print("Exiting expense tracker. Goodbye!")
             break
         else:
