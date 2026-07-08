@@ -8,7 +8,11 @@ def save_expenses_to_csv(expenses, filename):
 expenses=[]
 def add_expense():
     name=input("enter the name:")
-    amount=int(input("enter the amount:"))
+    try:
+        amount = int(input("Enter the amount: "))
+    except ValueError:
+        print("Invalid amount. Please enter a valid integer.\n")
+        return
     category=input("enter the category:")
     date=input("enter the date:")
     expense={"name":name,"amount":amount,"category":category,"date":date}
@@ -136,6 +140,36 @@ def show_highest_category():
     print("\nCategory with Highest Spending:")
     print(f"Category: {highest_category}")
     print(f"Total Spent: ₹{category_total[highest_category]}\n")
+def edit_expense():
+    if not expenses:
+        print("No expenses found.\n")
+        return
+
+    name = input("Enter the name of the expense to edit: ")
+
+    for expense in expenses:
+        if expense["name"].lower() == name.lower():
+            print("Leave blank if you don't want to change a field.")
+
+            new_name = input(f"Enter new name [{expense['name']}]: ")
+            new_amount = input(f"Enter new amount [{expense['amount']}]: ")
+            new_category = input(f"Enter new category [{expense['category']}]: ")
+            new_date = input(f"Enter new date [{expense['date']}]: ")
+
+            if new_name != "":
+                expense["name"] = new_name
+            if new_amount != "":
+                expense["amount"] = int(new_amount)
+            if new_category != "":
+                expense["category"] = new_category
+            if new_date != "":
+                expense["date"] = new_date
+
+            save_expenses_to_csv(expenses, "expenses.csv")
+            print("Expense updated successfully!\n")
+            return
+
+    print(f"No expense found with the name '{name}'.\n")
 def main():
     while True:
         print("1. Add Expense")
@@ -147,8 +181,9 @@ def main():
         print("7. Search by date")
         print("8. Monthly Summary")
         print("9.Show highest category")
-        print("10. Exit")
-        choice = input("Enter your choice (1-10): ")
+        print("10. Edit Expense")
+        print("11. Exit")
+        choice = input("Enter your choice (1-11): ")
         if choice == "1":
             add_expense()
         elif choice == "2":
@@ -168,6 +203,8 @@ def main():
         elif choice == "9":
             show_highest_category()
         elif choice == "10":
+            edit_expense()
+        elif choice == "11":
             print("Exiting expense tracker. Goodbye!")
             break
         else:
