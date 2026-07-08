@@ -11,12 +11,12 @@ This project helps users record, manage, and analyze expenses using a menu-drive
 * Add a new expense with **name, amount, category, and date**
 * View all recorded expenses
 * Delete an expense
+* Edit an existing expense
 * Show **category-wise total spending**
 * Show **overall total spending**
 * Search expenses by **category**
 * Search expenses by **date**
 * Show **monthly expense summary**
-* Show **highest expense**
 * Show **highest spending category**
 * Save expenses permanently in a **CSV file**
 * Load saved expenses automatically when the program starts
@@ -59,11 +59,11 @@ The program provides a menu-driven console interface with the following options:
 8. **Monthly Summary**
    Display the total spending for a selected month and year, along with category-wise totals for that month.
 
-9. **Show Highest Expense**
-   Display the expense with the highest amount spent.
+9. **Show Highest Spending Category**
+   Display the category in which the highest total amount has been spent.
 
-10. **Show Highest Spending Category**
-    Display the category in which the highest total amount has been spent.
+10. **Edit Expense**
+    Update an existing expense by changing its name, amount, category, or date.
 
 11. **Exit**
     Close the program safely.
@@ -83,7 +83,7 @@ Expenses are stored in a CSV file named **`expenses.csv`**.
 
 ### Example CSV format:
 
-```csv
+```csv id="wzpd2e"
 Name,Amount,Category,Date
 Lunch,120,Food,05-07-2026
 Bus,30,Travel,06-07-2026
@@ -126,9 +126,13 @@ Book,250,Study,06-07-2026
 
 ### Day 6
 
-* Added **highest expense**
 * Added **highest spending category**
 * Improved expense analysis features
+
+### Day 7
+
+* Added **edit expense**
+* Improved expense management features
 
 ---
 
@@ -142,20 +146,9 @@ Through this project, I practiced:
 * CSV reading and writing
 * Menu-driven program design
 * Searching and filtering data
-* Updating file data after deletion
+* Updating file data after deletion and editing
 * Summarizing data month-wise
-* Finding maximum values from stored data
 * Category-based expense analysis
-
----
-
-## Future Improvements
-
-* Add **budget warning**
-* Add **edit expense**
-* Create graphs/charts for expense analysis
-* Build a **Flask website version**
-* Upgrade storage from CSV to a database like **SQLite**
 
 ---
 
