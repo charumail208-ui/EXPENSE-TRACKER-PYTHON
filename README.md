@@ -16,6 +16,8 @@ This project helps users record, manage, and analyze expenses using a menu-drive
 * Search expenses by **category**
 * Search expenses by **date**
 * Show **monthly expense summary**
+* Show **highest expense**
+* Show **highest spending category**
 * Save expenses permanently in a **CSV file**
 * Load saved expenses automatically when the program starts
 * CSV file includes headings for better organization
@@ -57,8 +59,14 @@ The program provides a menu-driven console interface with the following options:
 8. **Monthly Summary**
    Display the total spending for a selected month and year, along with category-wise totals for that month.
 
-9. **Exit**
-   Close the program safely.
+9. **Show Highest Expense**
+   Display the expense with the highest amount spent.
+
+10. **Show Highest Spending Category**
+    Display the category in which the highest total amount has been spent.
+
+11. **Exit**
+    Close the program safely.
 
 ---
 
@@ -116,6 +124,12 @@ Book,250,Study,06-07-2026
 * Displays **category-wise monthly spending**
 * Improved understanding of **function creation and data filtering**
 
+### Day 6
+
+* Added **highest expense**
+* Added **highest spending category**
+* Improved expense analysis features
+
 ---
 
 ## Learning Outcomes
@@ -130,12 +144,13 @@ Through this project, I practiced:
 * Searching and filtering data
 * Updating file data after deletion
 * Summarizing data month-wise
+* Finding maximum values from stored data
+* Category-based expense analysis
 
 ---
 
 ## Future Improvements
 
-* Show **highest spending category**
 * Add **budget warning**
 * Add **edit expense**
 * Create graphs/charts for expense analysis
