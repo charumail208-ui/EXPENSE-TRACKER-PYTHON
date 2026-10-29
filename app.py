@@ -1,10 +1,19 @@
 import csv
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+from datetime import datetime
 def save_expenses_to_csv(expenses, filename):
-    with open("expenses.csv", mode='w', newline='') as file:
-        writer=csv.writer(file)
+    with open(filename, mode="w", newline="") as file:
+        writer = csv.writer(file)
         writer.writerow(["Name", "Amount", "Category", "Date"])
+
         for expense in expenses:
-            writer.writerow([expense["name"], expense["amount"], expense["category"], expense["date"]])
+            writer.writerow([
+                expense["name"],
+                expense["amount"],
+                expense["category"],
+                expense["date"]
+            ])
 expenses=[]
 def add_expense():
     name=input("enter the name:")
@@ -57,13 +66,30 @@ def show_overall_total(expenses):
     for expense in expenses:
         total+=expense["amount"]
     print(f"Overall total spending: ${total}")
+
+
 def load_expenses_from_csv():
     try:
-        with open("expenses.csv", mode='r') as file:
-            reader=csv.DictReader(file)
+        with open("expenses.csv", mode="r", newline="", encoding="utf-8-sig") as file:
+            reader = csv.DictReader(file)
+
+            if not reader.fieldnames:
+                print("expenses.csv is empty. Starting with no expenses.\n")
+                return
+
             for row in reader:
-                expense={"name":row["Name"],"amount":int(row["Amount"]),"category":row["Category"],"date":row["Date"]}
-                expenses.append(expense)
+                try:
+                    expense = {
+                        "name": row["Name"],
+                        "amount": int(row["Amount"]),
+                        "category": row["Category"],
+                        "date": row["Date"]
+                    }
+                    expenses.append(expense)
+
+                except (KeyError, ValueError, TypeError):
+                    print("Skipping an invalid row:", row)
+
     except FileNotFoundError:
         pass
 def search_by_category():
@@ -140,6 +166,118 @@ def show_highest_category():
     print("\nCategory with Highest Spending:")
     print(f"Category: {highest_category}")
     print(f"Total Spent: ₹{category_total[highest_category]}\n")
+
+
+def predict_next_month_expense():
+    if not expenses:
+        print("No expenses available for prediction.\n")
+        return
+
+    df = pd.DataFrame(expenses)
+
+    df["date"] = pd.to_datetime(
+        df["date"], format="%d-%m-%Y", errors="coerce"
+    )
+
+    df["amount"] = pd.to_numeric(df["amount"], errors="coerce")
+    df = df.dropna(subset=["date", "amount"])
+
+    if df.empty:
+        print("No valid expense records found.\n")
+        return
+
+    # Create a month column
+    df["month"] = df["date"].dt.to_period("M")
+
+    # Calculate total spending for each month
+    monthly_total = df.groupby("month")["amount"].sum().sort_index()
+
+    # Create a continuous range of months
+    all_months = pd.period_range(
+        start=monthly_total.index.min(),
+        end=monthly_total.index.max(),
+        freq="M"
+    )
+
+    monthly_total = monthly_total.reindex(all_months, fill_value=0)
+
+    if len(monthly_total) < 2:
+        print("Prediction requires at least two months of data.\n")
+        return
+
+    # Train the overall expense prediction model
+    X = pd.DataFrame({
+        "month_number": range(len(monthly_total))
+    })
+    y = monthly_total.values
+
+    overall_model = LinearRegression()
+    overall_model.fit(X, y)
+
+    next_month_number = len(monthly_total)
+    next_month = monthly_total.index[-1] + 1
+
+    overall_prediction = overall_model.predict(
+        pd.DataFrame({"month_number": [next_month_number]})
+    )[0]
+
+    overall_prediction = max(0, overall_prediction)
+
+    # Calculate spending by category for each month
+    category_monthly = df.pivot_table(
+        index="month",
+        columns="category",
+        values="amount",
+        aggfunc="sum",
+        fill_value=0
+    )
+
+    # Include months with no recorded spending
+    category_monthly = category_monthly.reindex(
+        all_months, fill_value=0
+    )
+
+    # Predict next month's spending for each category
+    category_predictions = {}
+
+    for category in category_monthly.columns:
+        category_data = category_monthly[category]
+
+        category_model = LinearRegression()
+        category_model.fit(X, category_data.values)
+
+        predicted_amount = category_model.predict(
+            pd.DataFrame({
+                "month_number": [next_month_number]
+            })
+        )[0]
+
+        category_predictions[category] = max(0, predicted_amount)
+
+    # Display results
+    print("\n======= MONTHLY EXPENSE PREDICTION =======")
+    print(f"\nHistorical monthly spending:")
+
+    for month, total in monthly_total.items():
+        print(f"{month}: ₹{total:.2f}")
+
+    print(f"\nOverall prediction for {next_month}:")
+    print(f"Predicted expense: ₹{overall_prediction:.2f}")
+
+    print(f"\n======= CATEGORY-WISE PREDICTION =======")
+
+    for category, amount in sorted(category_predictions.items()):
+        print(f"{category}: ₹{amount:.2f}")
+
+    category_total = sum(category_predictions.values())
+
+    print("----------------------------------------")
+    print(f"Total of category predictions: ₹{category_total:.2f}")
+    print(f"Overall prediction: ₹{overall_prediction:.2f}")
+    print("\nModel: Linear Regression")
+    print(f"Months analyzed: {len(monthly_total)}")
+    print("========================================\n")
+
 def edit_expense():
     if not expenses:
         print("No expenses found.\n")
@@ -182,8 +320,9 @@ def main():
         print("8. Monthly Summary")
         print("9.Show highest category")
         print("10. Edit Expense")
-        print("11. Exit")
-        choice = input("Enter your choice (1-11): ")
+        print("11. Predict Next Month's Expenses")
+        print("12. Exit")
+        choice = input("Enter your choice (1-12): ")
         if choice == "1":
             add_expense()
         elif choice == "2":
@@ -205,9 +344,14 @@ def main():
         elif choice == "10":
             edit_expense()
         elif choice == "11":
-            print("Exiting expense tracker. Goodbye!")
+            predict_next_month_expense()
+        elif choice == "12":
+            print("Exiting the program. Goodbye!")
             break
         else:
             print("Invalid choice. Please try again.\n")
 load_expenses_from_csv()
+main()
+load_expenses_from_csv()
+print("Loaded expenses:", expenses)
 main()
