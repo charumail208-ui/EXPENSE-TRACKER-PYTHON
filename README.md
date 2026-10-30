@@ -1,157 +1,187 @@
-# Expense Tracker (Python)
+# Expense Tracker with Monthly Expense Prediction
 
-A simple **Python console-based Expense Tracker** built as part of my **90 Days of Coding** challenge and my learning journey in **AI and Data Science**.
+A Python-based **Expense Tracker and Data Analysis System** developed as part of the **Introduction to Data Science (IDS) project**.
 
-This project helps users record, manage, and analyze expenses using a menu-driven interface. Expense data is stored in a **CSV file**, so it remains saved even after closing the program.
+This project helps users record, manage, track, and analyze their daily expenses through a menu-driven console application. It uses CSV file handling for persistent data storage and applies **Machine Learning techniques using Linear Regression** to predict future monthly expenses based on historical spending patterns.
+
+The project combines Python programming, data processing, exploratory analysis, and predictive analytics to transform everyday expense records into meaningful financial insights.
 
 ---
 
 ## Features
 
-* Add a new expense with **name, amount, category, and date**
-* View all recorded expenses
-* Delete an expense
-* Edit an existing expense
-* Show **category-wise total spending**
-* Show **overall total spending**
-* Search expenses by **category**
-* Search expenses by **date**
-* Show **monthly expense summary**
-* Show **highest spending category**
-* Save expenses permanently in a **CSV file**
-* Load saved expenses automatically when the program starts
-* CSV file includes headings for better organization
+### 1. Expense Management
+- Add new expenses with name, amount, category, and date.
+- View all recorded expenses.
+- Edit existing expense details.
+- Delete expenses and automatically update the CSV file.
+- Automatically load previously saved expenses when the program starts.
+
+### 2. Expense Analysis
+- Calculate category-wise total spending.
+- Calculate overall total expenditure.
+- Search expenses by category.
+- Search expenses by date.
+- Generate monthly expense summaries.
+- Display category-wise spending for a selected month.
+- Identify the category with the highest total spending.
+
+### 3. Machine Learning-Based Expense Prediction
+- Predict the next month's overall expenditure.
+- Generate category-wise expense predictions.
+- Analyze historical monthly spending patterns.
+- Use **Linear Regression** to estimate future expenses.
+- Handle months with no recorded expenses by including them as zero-spending months.
 
 ---
 
-## Technologies Used
+## Technologies and Libraries Used
 
-* **Python**
-* Built-in **CSV module**
+| Technology | Purpose |
+|---|---|
+| Python | Core programming language |
+| CSV | Expense data storage |
+| Pandas | Data processing and analysis |
+| NumPy | Numerical computing |
+| Scikit-learn | Machine Learning |
+| Linear Regression | Predicting future monthly expenses |
 
 ---
 
-## How It Works
+## Machine Learning Algorithm
 
-The program provides a menu-driven console interface with the following options:
+### Linear Regression
 
-1. **Add Expense**
-   Add a new expense by entering the expense name, amount, category, and date.
+The project uses **Linear Regression**, a supervised Machine Learning algorithm, to predict future expenditure.
 
-2. **View Expenses**
-   Display all saved expenses.
+The prediction process involves:
 
-3. **Delete Expense**
-   Remove an expense and update the CSV file.
+1. Reading historical expense records from the CSV file.
+2. Converting expense dates into monthly periods.
+3. Calculating the total expenditure for each month.
+4. Creating a continuous monthly dataset.
+5. Training a Linear Regression model using monthly spending trends.
+6. Predicting the expenditure for the next month.
+7. Applying separate Linear Regression models to estimate category-wise spending.
 
-4. **Show Category Total**
-   Display the total spending for each category.
+The system provides:
+- Overall monthly expense prediction.
+- Category-wise monthly expense prediction.
 
-5. **Show Overall Total**
-   Display the total of all expenses.
+**Note:** Predictions are estimates based on historical spending patterns and are not guaranteed future expenses. The model requires at least two months of valid data.
 
-6. **Search by Category**
-   Show expenses belonging to a specific category.
+---
 
-7. **Search by Date**
-   Show expenses recorded on a specific date.
+## How the Project Works
 
-8. **Monthly Summary**
-   Display the total spending for a selected month and year, along with category-wise totals for that month.
+The application provides a menu-driven interface with the following options:
 
-9. **Show Highest Spending Category**
-   Display the category in which the highest total amount has been spent.
-
-10. **Edit Expense**
-    Update an existing expense by changing its name, amount, category, or date.
-
-11. **Exit**
-    Close the program safely.
+1. **Add Expense** – Record a new expense.
+2. **View Expenses** – Display all recorded expenses.
+3. **Delete Expense** – Remove an existing expense.
+4. **Show Category Total** – Calculate category-wise spending.
+5. **Show Overall Total Spending** – Calculate total expenditure.
+6. **Search by Category** – Find expenses belonging to a particular category.
+7. **Search by Date** – Retrieve expenses recorded on a specific date.
+8. **Monthly Summary** – Generate a monthly expenditure report with category-wise totals.
+9. **Show Highest Spending Category** – Identify the category with the highest expenditure.
+10. **Edit Expense** – Modify existing expense details.
+11. **Predict Next Month's Expenses** – Estimate overall and category-wise future expenditure using Linear Regression.
+12. **Exit** – Close the application.
 
 ---
 
 ## Data Storage
 
-Each expense is stored with:
+All expense records are stored in a CSV file named `expenses.csv`.
 
-* **Name**
-* **Amount**
-* **Category**
-* **Date**
+Each record contains:
+- Name
+- Amount
+- Category
+- Date
 
-Expenses are stored in a CSV file named **`expenses.csv`**.
+### Sample CSV Format
 
-### Example CSV format:
-
-```csv id="wzpd2e"
+```csv
 Name,Amount,Category,Date
-Lunch,120,Food,05-07-2026
-Bus,30,Travel,06-07-2026
-Book,250,Study,06-07-2026
+Groceries,2500,Food,05-01-2026
+Vegetables,1200,Food,12-01-2026
+Bus Pass,800,Travel,15-01-2026
+Electricity Bill,1500,Utilities,20-01-2026
+Movie,500,Entertainment,25-01-2026
 ```
+
+The program automatically reads saved records when it starts and updates the CSV file whenever expenses are added, edited, or deleted.
 
 ---
 
-## Progress
+## Installation and Execution
 
-### Day 1
+### Prerequisites
+- Python 3.x
+- VS Code or any Python-supported IDE
 
-* Built the basic expense tracker
-* Added the ability to store expenses in a list
+### Step 1: Clone the Repository
 
-### Day 2
+```bash
+git clone https://github.com/charumail208-ui/EXPENSE-TRACKER-PYTHON.git
+```
 
-* Added **category-wise total spending**
+### Step 2: Navigate to the Project Folder
 
-### Day 3
+```bash
+cd EXPENSE-TRACKER-PYTHON
+```
 
-* Added **CSV file storage**
-* Added **loading expenses from CSV**
-* Added **delete expense with CSV update**
-* Added **overall total spending**
-* Added **CSV headings**
+### Step 3: Install Required Libraries
 
-### Day 4
+```bash
+pip install pandas numpy scikit-learn
+```
 
-* Added **date** for each expense
-* Added **search by category**
-* Added **search by date**
+### Step 4: Run the Application
 
-### Day 5
-
-* Added **monthly expense summary**
-* Displays **total spending for a selected month**
-* Displays **category-wise monthly spending**
-* Improved understanding of **function creation and data filtering**
-
-### Day 6
-
-* Added **highest spending category**
-* Improved expense analysis features
-
-### Day 7
-
-* Added **edit expense**
-* Improved expense management features
+```bash
+python app.py
+```
 
 ---
 
 ## Learning Outcomes
 
-Through this project, I practiced:
+Through this project, I gained practical experience in:
 
-* Python functions
-* Lists and dictionaries
-* File handling
-* CSV reading and writing
-* Menu-driven program design
-* Searching and filtering data
-* Updating file data after deletion and editing
-* Summarizing data month-wise
-* Category-based expense analysis
+- Python functions, lists, and dictionaries.
+- File handling and CSV operations.
+- Data cleaning and preprocessing.
+- Data manipulation using Pandas.
+- Numerical computing using NumPy.
+- Exploratory data analysis and expense summarization.
+- Supervised Machine Learning concepts.
+- Implementing Linear Regression.
+- Training models using historical data.
+- Predictive analytics and interpreting results.
+- Git and GitHub for project version control.
+
+---
+
+## Future Enhancements
+
+- Develop a web-based interface using HTML, CSS, JavaScript, and Flask.
+- Add interactive charts and visualizations.
+- Implement user authentication.
+- Introduce budget management and spending alerts.
+- Improve prediction accuracy using larger historical datasets.
+- Add downloadable monthly expense reports.
 
 ---
 
 ## Author
 
 **Charutha Rajeevan**
+
+AI & Data Science Engineering Student
+
+**GitHub Repository:**  
+https://github.com/charumail208-ui/EXPENSE-TRACKER-PYTHON
