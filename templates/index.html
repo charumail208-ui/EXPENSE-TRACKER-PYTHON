@@ -1,0 +1,279 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <h2>Expense Tracker</h2>
+
+        <nav>
+            <a href="#dashboard">Dashboard</a>
+            <a href="#add-expense">Add Expense</a>
+            <a href="#transactions">View Expenses</a>
+            <a href="#edit-expense">Edit Expense</a>
+            <a href="#delete-expense">Delete Expense</a>
+            <a href="#search-category">Search by Category</a>
+            <a href="#search-date">Search by Date</a>
+            <a href="#category-total">Category Total</a>
+            <a href="#overall-total">Overall Spending</a>
+            <a href="#monthly-summary">Monthly Summary</a>
+            <a href="#highest-category">Highest Category</a>
+            <a href="#prediction">Expense Prediction</a>
+        </nav>
+    </div>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <header id="dashboard">
+            <h1>Expense Tracker Dashboard</h1>
+            <p>Manage, monitor and analyze your daily expenses.</p>
+        </header>
+
+
+        <!-- DASHBOARD CARDS -->
+        <section class="summary">
+
+            <div class="card">
+                <h3>Total Expenses</h3>
+                <h2 id="total-expenses">₹0</h2>
+            </div>
+
+            <div class="card">
+                <h3>This Month</h3>
+                <h2 id="monthly-expenses">₹0</h2>
+            </div>
+
+            <div class="card">
+                <h3>Total Transactions</h3>
+                <h2 id="transaction-count">0</h2>
+            </div>
+
+        </section>
+
+
+        <!-- ADD EXPENSE -->
+        <section id="add-expense" class="section">
+
+            <h2>Add New Expense</h2>
+
+            <form id="expense-form">
+
+                <input type="text" id="name"
+                    placeholder="Expense Name" required>
+
+                <input type="number" id="amount"
+                    placeholder="Amount (₹)" min="0.01"
+                    step="0.01" required>
+
+                <input type="text" id="category"
+                    placeholder="Category" required>
+
+                <input type="date" id="date" required>
+
+                <button type="submit">Add Expense</button>
+
+            </form>
+
+            <p id="form-message"></p>
+
+        </section>
+
+
+        <!-- VIEW EXPENSES -->
+        <section id="transactions" class="section">
+
+            <h2>All Transactions</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Amount</th>
+                        <th>Category</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="expense-list">
+                    <tr>
+                        <td colspan="5">Loading expenses...</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </section>
+
+
+        <!-- EDIT EXPENSE -->
+        <section id="edit-expense" class="section">
+
+            <h2>Edit Expense</h2>
+
+            <form id="edit-form">
+
+                <input type="text" id="edit-name"
+                    placeholder="Existing Expense Name" required>
+
+                <input type="date" id="edit-date" required>
+
+                <input type="text" id="new-name"
+                    placeholder="New Expense Name" required>
+
+                <input type="number" id="new-amount"
+                    placeholder="New Amount (₹)"
+                    min="0.01" step="0.01" required>
+
+                <input type="text" id="new-category"
+                    placeholder="New Category" required>
+
+                <input type="date" id="new-date" required>
+
+                <button type="submit">Update Expense</button>
+
+            </form>
+
+            <p id="edit-message"></p>
+
+        </section>
+
+
+        <!-- DELETE EXPENSE -->
+        <section id="delete-expense" class="section">
+
+            <h2>Delete Expense</h2>
+
+            <p>Select the expense from the transaction table and use its Delete button.</p>
+
+        </section>
+
+
+        <!-- SEARCH BY CATEGORY -->
+        <section id="search-category" class="section">
+
+            <h2>Search by Category</h2>
+
+            <form id="category-search-form">
+
+                <input type="text" id="search-category-input"
+                    placeholder="Enter Category" required>
+
+                <button type="submit">Search</button>
+
+            </form>
+
+            <div id="category-search-results"></div>
+
+        </section>
+
+
+        <!-- SEARCH BY DATE -->
+        <section id="search-date" class="section">
+
+            <h2>Search by Date</h2>
+
+            <form id="date-search-form">
+
+                <input type="date" id="search-date-input" required>
+
+                <button type="submit">Search</button>
+
+            </form>
+
+            <div id="date-search-results"></div>
+
+        </section>
+
+
+        <!-- CATEGORY TOTAL -->
+        <section id="category-total" class="section">
+
+            <h2>Category-wise Spending</h2>
+
+            <button id="category-total-button">
+                Calculate Category Totals
+            </button>
+
+            <div id="category-total-results"></div>
+
+        </section>
+
+
+        <!-- OVERALL TOTAL -->
+        <section id="overall-total" class="section">
+
+            <h2>Overall Spending</h2>
+
+            <button id="overall-total-button">
+                Calculate Overall Spending
+            </button>
+
+            <h3 id="overall-total-result"></h3>
+
+        </section>
+
+
+        <!-- MONTHLY SUMMARY -->
+        <section id="monthly-summary" class="section">
+
+            <h2>Monthly Summary</h2>
+
+            <button id="monthly-summary-button">
+                Generate Monthly Summary
+            </button>
+
+            <div id="monthly-summary-results"></div>
+
+        </section>
+
+
+        <!-- HIGHEST CATEGORY -->
+        <section id="highest-category" class="section">
+
+            <h2>Highest Spending Category</h2>
+
+            <button id="highest-category-button">
+                Find Highest Category
+            </button>
+
+            <h3 id="highest-category-result"></h3>
+
+        </section>
+
+
+        <!-- PREDICTION -->
+        <section id="prediction" class="section">
+
+            <h2>Next Month Expense Prediction</h2>
+
+            <p>
+                Use Machine Learning and Linear Regression
+                to estimate your next month's expenses.
+            </p>
+
+            <button id="predict-button">
+                Predict Next Month
+            </button>
+
+            <h3 id="prediction-result"></h3>
+
+        </section>
+
+    </main>
+
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

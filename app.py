@@ -37,18 +37,25 @@ def view_expenses():
         print(f"- {expense['name'] }- ${expense['amount']} - ({expense['category']}) - Date: {expense['date']}")
     print()
 def delete_expense():
-    name = input("Enter the name of the expense to delete: ")
+    if not expenses:
+        print("No expenses found.\n")
+        return
+
+    name = input("Enter the name of the expense to delete: ").strip()
+    date = input("Enter the date of the expense (DD-MM-YYYY): ").strip()
+
     for expense in expenses:
-        if expense["name"] == name:
+        if (expense["name"].strip().lower() == name.lower()
+                and expense["date"].strip() == date):
+
             expenses.remove(expense)
-            with open("expenses.csv", mode='w', newline='') as file:
-                writer=csv.writer(file)
-                writer.writerow(["Name", "Amount", "Category","Date"])
-                for expense in expenses:
-                    writer.writerow([expense["name"], expense["amount"], expense["category"], expense["date"]])
-            print(f"Expense '{name}' deleted successfully!\n")
+
+            save_expenses_to_csv(expenses, "expenses.csv")
+
+            print(f"Expense '{name}' on {date} deleted successfully!\n")
             return
-    print(f"No expense found with the name '{name}'.\n")
+
+    print(f"No expense found with the name '{name}' on {date}.\n")
 def show_category_total(expenses):
     category_total={}
     for expense in expenses:
@@ -93,14 +100,33 @@ def load_expenses_from_csv():
     except FileNotFoundError:
         pass
 def search_by_category():
-    found=False
-    category=input("Enter the category to search for: ")
+    if not expenses:
+        print("No expenses found.\n")
+        return
+
+    category = input("Enter the category to search for: ").strip()
+
+    found = False
+
+    print(f"\nExpenses in category: {category}")
+    print("-----------------------------------")
+
     for expense in expenses:
-        if expense["category"] == category:
-            print(f"- {expense['name'] }- ${expense['amount']} - ({expense['category']}) - Date: {expense['date']}")
-            found=True
+        if expense["category"].strip().lower() == category.lower():
+
+            print(
+                f"Name: {expense['name']} | "
+                f"Amount: ₹{expense['amount']} | "
+                f"Category: {expense['category']} | "
+                f"Date: {expense['date']}"
+            )
+
+            found = True
+
     if not found:
         print(f"No expenses found in the category '{category}'.")
+
+    print()
 def search_by_date():
     found=False
     date=input("Enter the date to search for (DD-MM-YYYY): ")
@@ -351,7 +377,4 @@ def main():
         else:
             print("Invalid choice. Please try again.\n")
 load_expenses_from_csv()
-main()
-load_expenses_from_csv()
-print("Loaded expenses:", expenses)
 main()

@@ -1,0 +1,31 @@
+Name,Amount,Category,Date
+Groceries,2500,Food,05-01-2026
+Vegetables,1200,Food,12-01-2026
+Bus Pass,800,Travel,15-01-2026
+Electricity Bill,1500,Utilities,20-01-2026
+Movie,500,Entertainment,25-01-2026
+Groceries,3000,Food,05-02-2026
+Restaurant,1500,Food,10-02-2026
+Fuel,1200,Travel,15-02-2026
+Internet Bill,900,Utilities,20-02-2026
+Shopping,2000,Shopping,25-02-2026
+Groceries,3500,Food,05-03-2026
+Restaurant,1800,Food,10-03-2026
+Bus Pass,900,Travel,15-03-2026
+Electricity Bill,1600,Utilities,20-03-2026
+Movie,700,Entertainment,25-03-2026
+Groceries,3200,Food,05-04-2026
+Fuel,1500,Travel,12-04-2026
+Shopping,2500,Shopping,18-04-2026
+Internet Bill,900,Utilities,22-04-2026
+Restaurant,2000,Food,27-04-2026
+Groceries,4000,Food,05-05-2026
+Restaurant,2200,Food,10-05-2026
+Fuel,1800,Travel,15-05-2026
+Electricity Bill,1700,Utilities,20-05-2026
+Shopping,2800,Shopping,25-05-2026
+Groceries,4200,Food,05-06-2026
+Restaurant,2500,Food,10-06-2026
+Bus Pass,1000,Travel,15-06-2026
+Internet Bill,950,Utilities,20-06-2026
+Movie,800,Entertainment,25-06-2026
